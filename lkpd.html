@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LKPD — Bahan Ajar IPS</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero {
+  background: linear-gradient(135deg, #78350f, #d97706, #fbbf24);
+  padding: 3.5rem 2rem 2.5rem; color: #fff; text-align: center;
+}
+.page-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin-bottom: 0.5rem; }
+.page-hero p { color: rgba(255,255,255,0.8); font-size: 0.95rem; }
+
+.content-wrap { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+
+/* AKTIVITAS CARD */
+.aktivitas-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 20px; margin-bottom: 2.5rem;
+  overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+}
+.ak-head {
+  padding: 1.1rem 1.5rem;
+  display: flex; align-items: center; gap: 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+.ak-head h3 { font-size: 1.05rem; font-weight: 700; flex:1; }
+.ak-num {
+  width: 32px; height: 32px; border-radius: 50%;
+  background: var(--hijau); color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+}
+.ak-badge {
+  background: var(--kuning-pale); color: #92400e;
+  font-size: 0.7rem; font-weight: 700; letter-spacing: 0.05em;
+  padding: 0.2rem 0.65rem; border-radius: 999px; text-transform: uppercase;
+}
+.ak-body { padding: 1.75rem; }
+.ak-desc { font-size: 0.9rem; color: var(--muted); margin-bottom: 1.5rem; line-height: 1.65; }
+
+/* ===== AKTIVITAS 1 - MATCH ===== */
+.match-layout { display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0.75rem; align-items: center; }
+@media(max-width:560px) { .match-layout { grid-template-columns: 1fr; } .match-mid { display: none; } }
+.match-col { display: flex; flex-direction: column; gap: 0.5rem; }
+.match-mid { display: flex; flex-direction: column; gap: 0.5rem; align-items: center; color: #d1d5db; font-size: 1.2rem; }
+
+.m-item {
+  padding: 0.7rem 1rem; border-radius: 10px;
+  font-size: 0.875rem; font-weight: 600;
+  border: 2px solid; cursor: pointer;
+  transition: all 0.2s; text-align: center; user-select: none;
+}
+.m-left  { background: var(--hijau-pale); border-color: #86efac; color: var(--hijau); }
+.m-left:hover,  .m-left.sel  { background: var(--hijau);  color: #fff; border-color: var(--hijau); transform: scale(1.03); }
+.m-right { background: var(--biru-pale);  border-color: #93c5fd; color: var(--biru); }
+.m-right:hover, .m-right.sel { background: var(--biru);   color: #fff; border-color: var(--biru);  transform: scale(1.03); }
+.m-right.ok   { background: #16a34a; border-color: #16a34a; color: #fff; pointer-events: none; }
+.m-right.fail { background: #dc2626; border-color: #dc2626; color: #fff; animation: shake 0.4s; }
+.m-left.done  { opacity: 0.45; pointer-events: none; }
+
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+.match-result { margin-top: 1rem; font-size: 0.9rem; font-weight: 600; min-height: 1.4rem; }
+.match-result.ok   { color: #16a34a; }
+.match-result.fail { color: #dc2626; }
+
+/* ===== AKTIVITAS 2 - ISI ===== */
+.tbl-isi { width: 100%; border-collapse: collapse; font-size: 0.875rem; }
+.tbl-isi th { background: var(--hijau); color: #fff; padding: 0.75rem 1rem; text-align: left; }
+.tbl-isi td { padding: 0.65rem 1rem; border-bottom: 1px solid var(--border); }
+.tbl-isi tr:nth-child(even) td { background: #f9fafb; }
+.tbl-isi input {
+  width: 100%; border: 1.5px solid #d1d5db; border-radius: 8px;
+  padding: 0.45rem 0.75rem; font-family: inherit; font-size: 0.875rem;
+  outline: none; transition: all 0.2s; background: #fff;
+}
+.tbl-isi input:focus { border-color: var(--hijau); box-shadow: 0 0 0 3px rgba(27,107,58,0.12); }
+.tbl-isi input.ok   { border-color: #16a34a; background: #f0fdf4; color: #15803d; font-weight: 600; }
+.tbl-isi input.fail { border-color: #dc2626; background: #fef2f2; }
+.isi-result { margin-top: 1rem; font-size: 0.9rem; font-weight: 600; }
+
+/* ===== AKTIVITAS 3 - TEBAK ===== */
+.tebak-grid { display: flex; flex-direction: column; gap: 1rem; }
+.tebak-item {
+  background: #f9fafb; border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 1.1rem 1.25rem;
+  transition: border-color 0.2s;
+}
+.tebak-item:focus-within { border-color: var(--kuning); }
+.ti-label { font-size: 0.7rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 0.4rem; }
+.ti-hint { font-size: 0.9rem; color: #374151; font-style: italic; line-height: 1.65; margin-bottom: 0.9rem; }
+.ti-row { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+.ti-row input {
+  flex: 1; min-width: 180px; border: 1.5px solid #d1d5db; border-radius: 8px;
+  padding: 0.5rem 0.9rem; font-family: inherit; font-size: 0.9rem;
+  outline: none; transition: all 0.2s;
+}
+.ti-row input:focus { border-color: var(--kuning); box-shadow: 0 0 0 3px rgba(245,158,11,0.15); }
+.ti-row input.ok   { border-color: #16a34a; background: #f0fdf4; color: #15803d; font-weight: 700; }
+.ti-row input.fail { border-color: #dc2626; background: #fef2f2; }
+.cek-btn {
+  background: none; border: 1.5px solid var(--kuning); color: #92400e;
+  padding: 0.5rem 1rem; border-radius: 8px; font-size: 0.8rem; font-weight: 700;
+  cursor: pointer; transition: all 0.2s; font-family: inherit; white-space: nowrap;
+}
+.cek-btn:hover { background: var(--kuning); }
+.ti-fb { font-size: 0.8rem; font-weight: 700; margin-top: 0.4rem; }
+.ti-fb.ok   { color: #16a34a; }
+.ti-fb.fail { color: #dc2626; }
+
+/* page nav */
+.page-nav-row { display: flex; justify-content: space-between; margin-top: 3rem; flex-wrap: wrap; gap: 1rem; }
+</style>
+</head>
+<body class="page-enter">
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">IPS <span>Nusantara</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Beranda</a></li>
+    <li><a href="identitas.html">📋 Identitas</a></li>
+    <li><a href="materi.html">📖 Materi</a></li>
+    <li><a href="lkpd.html" class="active">✏️ LKPD</a></li>
+    <li><a href="evaluasi.html">🎯 Evaluasi</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleNav()">☰</button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Beranda</a>
+  <a href="identitas.html">📋 Identitas</a>
+  <a href="materi.html">📖 Materi</a>
+  <a href="lkpd.html" class="active">✏️ LKPD</a>
+  <a href="evaluasi.html">🎯 Evaluasi</a>
+</div>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <h1>✏️ LKPD Interaktif</h1>
+    <p>Lembar Kegiatan Peserta Didik — Kerjakan langsung di sini!</p>
+  </div>
+
+  <div class="content-wrap">
+    <div class="breadcrumb"><a href="index.html">Beranda</a> › LKPD</div>
+
+    <div class="info-box yellow fade-in">
+      <div class="ib-title">📌 Petunjuk LKPD</div>
+      <p>Kerjakan semua aktivitas di bawah ini dengan teliti. Setiap aktivitas memiliki cara pengerjaan yang berbeda — ikuti instruksinya ya! Jika salah, coba lagi sampai benar. Semangat! 💪</p>
+    </div>
+
+    <!-- AKTIVITAS 1 -->
+    <div class="aktivitas-card fade-in">
+      <div class="ak-head">
+        <div class="ak-num">1</div>
+        <h3>Ayo Pasangkan! 🎯</h3>
+        <span class="ak-badge">Klik untuk Pasang</span>
+      </div>
+      <div class="ak-body">
+        <p class="ak-desc">Klik nama suku di kolom kiri, kemudian klik asal wilayahnya di kolom kanan untuk memasangkan. Jika benar, warna akan berubah hijau!</p>
+        <div class="match-layout">
+          <div class="match-col" id="colSuku">
+            <div class="m-item m-left" data-id="toraja">1. Suku Toraja</div>
+            <div class="m-item m-left" data-id="minang">2. Suku Minangkabau</div>
+            <div class="m-item m-left" data-id="asmat">3. Suku Asmat</div>
+            <div class="m-item m-left" data-id="dayak">4. Suku Dayak</div>
+            <div class="m-item m-left" data-id="sunda">5. Suku Sunda</div>
+          </div>
+          <div class="match-mid">→<br>→<br>→<br>→<br>→</div>
+          <div class="match-col" id="colWilayah">
+            <div class="m-item m-right" data-id="sumbar">A. Sumatra Barat</div>
+            <div class="m-item m-right" data-id="kalim">B. Kalimantan</div>
+            <div class="m-item m-right" data-id="sulsel">C. Sulawesi Selatan</div>
+            <div class="m-item m-right" data-id="papua">D. Papua</div>
+            <div class="m-item m-right" data-id="jabar">E. Jawa Barat</div>
+          </div>
+        </div>
+        <div class="match-result" id="matchResult"></div>
+      </div>
+    </div>
+
+    <!-- AKTIVITAS 2 -->
+    <div class="aktivitas-card fade-in">
+      <div class="ak-head">
+        <div class="ak-num">2</div>
+        <h3>Ayo Melengkapi! ✏️</h3>
+        <span class="ak-badge">Ketik Jawaban</span>
+      </div>
+      <div class="ak-body">
+        <p class="ak-desc">Lengkapi tabel di bawah dengan menyebutkan salah satu kebudayaan khas dari setiap suku bangsa, lalu klik tombol Periksa Jawaban.</p>
+        <div class="tbl-wrap">
+          <table class="tbl-isi">
+            <thead><tr><th>No</th><th>Nama Suku</th><th>Asal Wilayah</th><th>Kebudayaan Khas</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>Suku Batak</td><td>Sumatra Utara</td><td><input type="text" id="i1" placeholder="Contoh: ulos, tari tor-tor..."></td></tr>
+              <tr><td>2</td><td>Suku Jawa</td><td>Jawa Tengah</td><td><input type="text" id="i2" placeholder="Contoh: batik, wayang..."></td></tr>
+              <tr><td>3</td><td>Suku Bugis</td><td>Sulawesi Selatan</td><td><input type="text" id="i3" placeholder="Contoh: pinisi, padduppa..."></td></tr>
+              <tr><td>4</td><td>Suku Bali</td><td>Bali</td><td><input type="text" id="i4" placeholder="Contoh: kecak, barong..."></td></tr>
+              <tr><td>5</td><td>Suku Dayak</td><td>Kalimantan</td><td><input type="text" id="i5" placeholder="Contoh: mandau, lamin..."></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-secondary" style="margin-top:1.25rem;" onclick="periksaIsi()">Periksa Jawaban ✓</button>
+        <div class="isi-result" id="isiResult"></div>
+      </div>
+    </div>
+
+    <!-- AKTIVITAS 3 -->
+    <div class="aktivitas-card fade-in">
+      <div class="ak-head">
+        <div class="ak-num">3</div>
+        <h3>Permainan: Tebak Suku! 🎮</h3>
+        <span class="ak-badge">Game Seru</span>
+      </div>
+      <div class="ak-body">
+        <p class="ak-desc">Baca petunjuk di setiap kotak, lalu ketik nama suku bangsa yang dimaksud. Klik Cek untuk memeriksa jawabanmu!</p>
+        <div class="tebak-grid">
+
+          <div class="tebak-item">
+            <div class="ti-label">Petunjuk 1</div>
+            <div class="ti-hint">"Suku ini berasal dari Sulawesi Selatan. Mereka terkenal sebagai pelaut ulung dan pembuat kapal bernama pinisi yang terkenal ke seluruh dunia."</div>
+            <div class="ti-row">
+              <input type="text" id="t1" placeholder="Nama sukunya...">
+              <button class="cek-btn" onclick="cekTebak('t1',['bugis'],'f1')">Cek →</button>
+            </div>
+            <div class="ti-fb" id="f1"></div>
+          </div>
+
+          <div class="tebak-item">
+            <div class="ti-label">Petunjuk 2</div>
+            <div class="ti-hint">"Suku ini berasal dari Sumatra Barat. Mereka menggunakan sistem matrilineal, yaitu garis keturunan dari pihak ibu, dan memiliki rumah adat yang unik bernama Rumah Gadang."</div>
+            <div class="ti-row">
+              <input type="text" id="t2" placeholder="Nama sukunya...">
+              <button class="cek-btn" onclick="cekTebak('t2',['minang','minangkabau'],'f2')">Cek →</button>
+            </div>
+            <div class="ti-fb" id="f2"></div>
+          </div>
+
+          <div class="tebak-item">
+            <div class="ti-label">Petunjuk 3</div>
+            <div class="ti-hint">"Suku ini terkenal dengan ukiran kayu yang indah dan bernilai seni tinggi. Mereka berasal dari daerah Papua dan sangat menghargai alam sekitar mereka."</div>
+            <div class="ti-row">
+              <input type="text" id="t3" placeholder="Nama sukunya...">
+              <button class="cek-btn" onclick="cekTebak('t3',['asmat'],'f3')">Cek →</button>
+            </div>
+            <div class="ti-fb" id="f3"></div>
+          </div>
+
+          <div class="tebak-item">
+            <div class="ti-label">Petunjuk 4</div>
+            <div class="ti-hint">"Suku ini berasal dari Jawa Tengah dan Jawa Timur. Kesenian wayang kulit dan gamelan adalah ciri khas budaya mereka yang terkenal di seluruh dunia."</div>
+            <div class="ti-row">
+              <input type="text" id="t4" placeholder="Nama sukunya...">
+              <button class="cek-btn" onclick="cekTebak('t4',['jawa'],'f4')">Cek →</button>
+            </div>
+            <div class="ti-fb" id="f4"></div>
+          </div>
+
+          <div class="tebak-item">
+            <div class="ti-label">Petunjuk 5</div>
+            <div class="ti-hint">"Suku ini tinggal di Pulau Kalimantan. Mereka terkenal dengan senjata tradisional bernama mandau dan rumah panjang yang disebut lamin yang bisa dihuni banyak keluarga."</div>
+            <div class="ti-row">
+              <input type="text" id="t5" placeholder="Nama sukunya...">
+              <button class="cek-btn" onclick="cekTebak('t5',['dayak'],'f5')">Cek →</button>
+            </div>
+            <div class="ti-fb" id="f5"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <div class="page-nav-row fade-in">
+      <a href="materi.html" class="btn btn-outline">← Kembali ke Materi</a>
+      <a href="evaluasi.html" class="btn btn-primary">Lanjut ke Evaluasi →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Bahan Ajar IPS Kelas IV SD</strong> — Keragaman Suku Bangsa di Indonesia</p>
+  <p>Kurikulum Merdeka · 🇮🇩 Bhinneka Tunggal Ika</p>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+/* ===== AKTIVITAS 1 ===== */
+const matchMap = { toraja:'sulsel', minang:'sumbar', asmat:'papua', dayak:'kalim', sunda:'jabar' };
+const sukuNames = { toraja:'Suku Toraja', minang:'Suku Minangkabau', asmat:'Suku Asmat', dayak:'Suku Dayak', sunda:'Suku Sunda' };
+const wilayahNames = { sulsel:'Sulawesi Selatan', sumbar:'Sumatra Barat', papua:'Papua', kalim:'Kalimantan', jabar:'Jawa Barat' };
+let selectedSuku = null;
+
+document.querySelectorAll('.m-left').forEach(el => {
+  el.addEventListener('click', () => {
+    document.querySelectorAll('.m-left').forEach(e => e.classList.remove('sel'));
+    el.classList.add('sel');
+    selectedSuku = el.dataset.id;
+    document.getElementById('matchResult').className = 'match-result';
+    document.getElementById('matchResult').textContent = '👆 Sekarang pilih wilayahnya di kolom kanan!';
+  });
+});
+
+document.querySelectorAll('.m-right').forEach(el => {
+  el.addEventListener('click', () => {
+    const res = document.getElementById('matchResult');
+    if (!selectedSuku) { res.textContent = '⚠️ Pilih dulu nama suku di kolom kiri!'; res.className='match-result fail'; return; }
+    const benar = matchMap[selectedSuku] === el.dataset.id;
+    el.classList.remove('ok','fail');
+    el.classList.add(benar ? 'ok' : 'fail');
+    if (benar) {
+      res.className = 'match-result ok';
+      res.textContent = `✅ Benar! ${sukuNames[selectedSuku]} berasal dari ${wilayahNames[el.dataset.id]}!`;
+      document.querySelectorAll('.m-left').forEach(e => { if(e.dataset.id===selectedSuku) e.classList.add('done'); });
+      setTimeout(()=>{ el.classList.remove('fail'); }, 600);
+    } else {
+      res.className = 'match-result fail';
+      res.textContent = `❌ Belum tepat. Coba lagi!`;
+      setTimeout(()=>{ el.classList.remove('fail'); }, 500);
+    }
+    selectedSuku = null;
+    document.querySelectorAll('.m-left').forEach(e => e.classList.remove('sel'));
+  });
+});
+
+/* ===== AKTIVITAS 2 ===== */
+const isiKunci = {
+  i1: ['ulos','tor-tor','tari tor','marga','batak'],
+  i2: ['batik','wayang','gamelan','keris'],
+  i3: ['pinisi','kapal pinisi','padduppa','tari padduppa'],
+  i4: ['kecak','tari kecak','barong','ogoh'],
+  i5: ['mandau','lamin','hudoq','tari hudoq'],
+};
+function periksaIsi() {
+  let benar = 0;
+  Object.entries(isiKunci).forEach(([id, kunci]) => {
+    const el = document.getElementById(id);
+    const val = el.value.trim().toLowerCase();
+    const ok = kunci.some(k => val.includes(k));
+    el.classList.toggle('ok', ok);
+    el.classList.toggle('fail', !ok && val.length > 0);
+    if (ok) benar++;
+  });
+  const res = document.getElementById('isiResult');
+  res.textContent = benar === 5
+    ? `🎉 Luar biasa! Semua ${benar}/5 jawaban benar!`
+    : `📝 ${benar}/5 jawaban benar. Perbaiki yang masih merah ya!`;
+  res.style.color = benar === 5 ? '#16a34a' : '#d97706';
+}
+
+/* ===== AKTIVITAS 3 ===== */
+const altJawaban = {
+  t1: ['bugis'],
+  t2: ['minang','minangkabau'],
+  t3: ['asmat'],
+  t4: ['jawa'],
+  t5: ['dayak'],
+};
+const namaBenar = { t1:'Bugis', t2:'Minangkabau', t3:'Asmat', t4:'Jawa', t5:'Dayak' };
+
+function cekTebak(inputId, kunci, fbId) {
+  const el = document.getElementById(inputId);
+  const fb = document.getElementById(fbId);
+  const val = el.value.trim().toLowerCase();
+  if (!val) { fb.className='ti-fb fail'; fb.textContent='⚠️ Ketik jawabanmu dulu!'; return; }
+  const ok = kunci.some(k => val.includes(k));
+  el.classList.toggle('ok', ok);
+  el.classList.toggle('fail', !ok);
+  fb.className = 'ti-fb ' + (ok ? 'ok' : 'fail');
+  fb.textContent = ok
+    ? `✅ Benar! Jawabannya memang Suku ${namaBenar[inputId]}!`
+    : `❌ Belum tepat. Baca lagi petunjuknya ya!`;
+}
+
+document.querySelectorAll('.tebak-item input').forEach(inp => {
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') inp.closest('.tebak-item').querySelector('.cek-btn').click();
+  });
+});
+</script>
+</body>
+</html>

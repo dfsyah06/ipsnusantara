@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Materi — Bahan Ajar IPS</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero {
+  background: linear-gradient(135deg, #1e3a5f, #1D4ED8, #3b82f6);
+  padding: 3.5rem 2rem 2.5rem; color: #fff; text-align: center;
+}
+.page-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin-bottom: 0.5rem; }
+.page-hero p { color: rgba(255,255,255,0.75); font-size: 0.95rem; }
+
+.content-wrap { max-width: 960px; margin: 0 auto; padding: 3rem 2rem; }
+
+/* MATERI SECTION */
+.materi-block { margin-bottom: 3.5rem; }
+
+.materi-block h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem; margin-bottom: 1rem;
+  display: flex; align-items: center; gap: 0.6rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--border);
+}
+
+.materi-body { font-size: 0.93rem; line-height: 1.85; color: #374151; margin-bottom: 1.25rem; }
+
+/* Suku List Cards */
+.suku-list {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem; margin: 1.25rem 0;
+}
+.suku-item {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 12px; padding: 0.9rem 1rem;
+  font-size: 0.875rem; font-weight: 600; color: var(--text);
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  transition: all 0.25s;
+}
+.suku-item:hover { border-color: var(--hijau); background: var(--hijau-pale); transform: translateX(4px); }
+.suku-item .si-icon { font-size: 1.2rem; flex-shrink: 0; }
+.suku-item .si-info { }
+.suku-item .si-name { font-weight: 700; }
+.suku-item .si-detail { font-size: 0.78rem; color: var(--muted); font-weight: 400; margin-top: 0.15rem; }
+
+/* Region header colors */
+.region-sumatra h3 { color: #dc2626; }
+.region-sumatra h3 span { background:#fee2e2; padding: 0.2rem 0.5rem; border-radius: 8px; }
+.region-jawa h3 { color: #1D4ED8; }
+.region-jawa h3 span { background:#dbeafe; padding: 0.2rem 0.5rem; border-radius: 8px; }
+.region-kalim h3 { color: #059669; }
+.region-kalim h3 span { background:#d1fae5; padding: 0.2rem 0.5rem; border-radius: 8px; }
+.region-sulawesi h3 { color: #d97706; }
+.region-sulawesi h3 span { background:#fef3c7; padding: 0.2rem 0.5rem; border-radius: 8px; }
+.region-bali h3 { color: #7c3aed; }
+.region-bali h3 span { background:#ede9fe; padding: 0.2rem 0.5rem; border-radius: 8px; }
+.region-maluku h3 { color: #0891b2; }
+.region-maluku h3 span { background:#cffafe; padding: 0.2rem 0.5rem; border-radius: 8px; }
+
+/* Progress nav */
+.progress-nav {
+  position: sticky; top: var(--nav-h); z-index: 200;
+  background: #fff; border-bottom: 1px solid var(--border);
+  padding: 0.75rem 2rem;
+  display: flex; gap: 0.5rem; overflow-x: auto;
+  scrollbar-width: none;
+}
+.progress-nav::-webkit-scrollbar { display: none; }
+.pn-btn {
+  white-space: nowrap; padding: 0.4rem 1rem; border-radius: 999px;
+  border: 1.5px solid var(--border); background: #fff;
+  font-size: 0.8rem; font-weight: 600; color: var(--muted);
+  cursor: pointer; transition: all 0.2s; font-family: inherit;
+  text-decoration: none; display: inline-block;
+}
+.pn-btn:hover, .pn-btn.active { background: var(--hijau); color: #fff; border-color: var(--hijau); }
+
+/* page nav */
+.page-nav-row { display: flex; justify-content: space-between; margin-top: 3rem; flex-wrap: wrap; gap: 1rem; }
+</style>
+</head>
+<body class="page-enter">
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">IPS <span>Nusantara</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Beranda</a></li>
+    <li><a href="identitas.html">📋 Identitas</a></li>
+    <li><a href="materi.html" class="active">📖 Materi</a></li>
+    <li><a href="lkpd.html">✏️ LKPD</a></li>
+    <li><a href="evaluasi.html">🎯 Evaluasi</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleNav()">☰</button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Beranda</a>
+  <a href="identitas.html">📋 Identitas</a>
+  <a href="materi.html" class="active">📖 Materi</a>
+  <a href="lkpd.html">✏️ LKPD</a>
+  <a href="evaluasi.html">🎯 Evaluasi</a>
+</div>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <h1>📖 Materi Pembelajaran</h1>
+    <p>Mengenal Keragaman Suku Bangsa di Indonesia</p>
+  </div>
+
+  <!-- PROGRESS NAV -->
+  <div class="progress-nav">
+    <a href="#pengertian" class="pn-btn">❓ Pengertian</a>
+    <a href="#sumatra"    class="pn-btn">🏔️ Sumatra</a>
+    <a href="#jawa"       class="pn-btn">☕ Jawa</a>
+    <a href="#kalimantan" class="pn-btn">🌿 Kalimantan</a>
+    <a href="#sulawesi"   class="pn-btn">🦀 Sulawesi</a>
+    <a href="#bali"       class="pn-btn">🌺 Bali & NTB/NTT</a>
+    <a href="#maluku"     class="pn-btn">🦜 Maluku & Papua</a>
+    <a href="#ringkasan"  class="pn-btn">📊 Ringkasan</a>
+  </div>
+
+  <div class="content-wrap">
+    <div class="breadcrumb"><a href="index.html">Beranda</a> › Materi</div>
+
+    <!-- PENGERTIAN -->
+    <div class="materi-block fade-in" id="pengertian">
+      <h3 style="color:var(--hijau); border-color:var(--hijau-muda);">❓ Apa Itu Suku Bangsa?</h3>
+      <div class="info-box green">
+        <div class="ib-title">🔑 Pengertian</div>
+        <p>Suku bangsa adalah kelompok masyarakat yang memiliki kesamaan asal-usul, bahasa, budaya, dan adat istiadat yang diturunkan dari generasi ke generasi.</p>
+      </div>
+      <p class="materi-body">Indonesia adalah negara kepulauan terbesar di dunia yang terdiri dari lebih dari 17.000 pulau. Di setiap pulau, terdapat berbagai suku bangsa yang hidup dengan kebudayaan yang berbeda-beda. Keragaman ini adalah kekayaan dan kebanggaan bangsa Indonesia.</p>
+      <div class="info-box yellow">
+        <div class="ib-title">💡 Tahukah Kamu?</div>
+        <p>Menurut data Badan Pusat Statistik (BPS), Indonesia memiliki lebih dari <strong>1.300 suku bangsa</strong>! Walaupun berbeda-beda, kita tetap satu bangsa sesuai semboyan <strong>Bhinneka Tunggal Ika</strong> — "Berbeda-beda tetapi tetap satu jua."</p>
+      </div>
+    </div>
+
+    <!-- SUMATRA -->
+    <div class="materi-block region-sumatra fade-in" id="sumatra">
+      <h3><span>🏔️ Pulau Sumatra</span></h3>
+      <p class="materi-body">Pulau Sumatra terletak di bagian barat Indonesia. Di pulau ini terdapat berbagai suku bangsa yang terkenal dengan kebudayaannya yang kaya dan beragam.</p>
+      <div class="suku-list">
+        <div class="suku-item"><span class="si-icon">🧣</span><div class="si-info"><div class="si-name">Suku Batak</div><div class="si-detail">Sumatra Utara — Ulos & Tari Tor-Tor</div></div></div>
+        <div class="suku-item"><span class="si-icon">🏠</span><div class="si-info"><div class="si-name">Suku Minangkabau</div><div class="si-detail">Sumatra Barat — Rumah Gadang & Matrilineal</div></div></div>
+        <div class="suku-item"><span class="si-icon">💃</span><div class="si-info"><div class="si-name">Suku Aceh</div><div class="si-detail">Aceh — Tari Saman yang memukau</div></div></div>
+        <div class="suku-item"><span class="si-icon">🧵</span><div class="si-info"><div class="si-name">Suku Melayu</div><div class="si-detail">Riau, Kepri, Jambi — Pantun & Tenun</div></div></div>
+        <div class="suku-item"><span class="si-icon">👑</span><div class="si-info"><div class="si-name">Suku Lampung</div><div class="si-detail">Lampung — Siger & Tapis Lampung</div></div></div>
+      </div>
+      <div class="info-box green"><div class="ib-title">✨ Budaya Terkenal</div><p>Tari Saman dari Aceh telah diakui UNESCO sebagai Warisan Budaya Takbenda. Rumah Gadang Minangkabau unik karena atapnya melengkung seperti tanduk kerbau.</p></div>
+    </div>
+
+    <!-- JAWA -->
+    <div class="materi-block region-jawa fade-in" id="jawa">
+      <h3><span>☕ Pulau Jawa</span></h3>
+      <p class="materi-body">Pulau Jawa adalah pulau yang paling padat penduduknya di Indonesia. Berbagai suku bangsa hidup di pulau ini dengan kebudayaan yang sangat beragam dan kaya.</p>
+      <div class="suku-list">
+        <div class="suku-item"><span class="si-icon">🎭</span><div class="si-info"><div class="si-name">Suku Jawa</div><div class="si-detail">Jawa Tengah & Timur — Batik, Wayang & Gamelan</div></div></div>
+        <div class="suku-item"><span class="si-icon">🎵</span><div class="si-info"><div class="si-name">Suku Sunda</div><div class="si-detail">Jawa Barat & Banten — Angklung & Tari Jaipong</div></div></div>
+        <div class="suku-item"><span class="si-icon">🎪</span><div class="si-info"><div class="si-name">Suku Betawi</div><div class="si-detail">Jakarta — Ondel-ondel & Kerak Telor</div></div></div>
+        <div class="suku-item"><span class="si-icon">🐂</span><div class="si-info"><div class="si-name">Suku Madura</div><div class="si-detail">Madura — Karapan Sapi & Batik Madura</div></div></div>
+      </div>
+      <div class="info-box blue"><div class="ib-title">✨ Budaya Terkenal</div><p>Batik Jawa telah diakui UNESCO sebagai Warisan Budaya Takbenda. Wayang kulit adalah seni pertunjukan tradisional yang memiliki nilai filosofi tinggi.</p></div>
+    </div>
+
+    <!-- KALIMANTAN -->
+    <div class="materi-block region-kalim fade-in" id="kalimantan">
+      <h3><span>🌿 Pulau Kalimantan</span></h3>
+      <p class="materi-body">Kalimantan adalah pulau terbesar di Indonesia. Hutan-hutan lebatnya menjadi tempat tinggal berbagai suku bangsa yang kaya tradisi dan sangat menghargai alam.</p>
+      <div class="suku-list">
+        <div class="suku-item"><span class="si-icon">🗡️</span><div class="si-info"><div class="si-name">Suku Dayak</div><div class="si-detail">Kalimantan — Mandau, Tari Hudoq & Lamin</div></div></div>
+        <div class="suku-item"><span class="si-icon">🎶</span><div class="si-info"><div class="si-name">Suku Banjar</div><div class="si-detail">Kalimantan Selatan — Lagu Ampar-Ampar Pisang</div></div></div>
+        <div class="suku-item"><span class="si-icon">👑</span><div class="si-info"><div class="si-name">Suku Kutai</div><div class="si-detail">Kalimantan Timur — Kerajaan tertua di Indonesia</div></div></div>
+      </div>
+      <div class="info-box green"><div class="ib-title">✨ Budaya Terkenal</div><p>Rumah Lamin (rumah panjang) suku Dayak bisa dihuni oleh puluhan hingga ratusan orang sekaligus. Mandau adalah senjata tradisional yang sangat terkenal.</p></div>
+    </div>
+
+    <!-- SULAWESI -->
+    <div class="materi-block region-sulawesi fade-in" id="sulawesi">
+      <h3><span>🦀 Pulau Sulawesi</span></h3>
+      <p class="materi-body">Sulawesi memiliki bentuk pulau yang unik seperti huruf K. Berbagai suku bangsa di sini terkenal dengan tradisi dan seni budayanya yang luar biasa.</p>
+      <div class="suku-list">
+        <div class="suku-item"><span class="si-icon">⛵</span><div class="si-info"><div class="si-name">Suku Bugis</div><div class="si-detail">Sulawesi Selatan — Pelaut ulung & Kapal Pinisi</div></div></div>
+        <div class="suku-item"><span class="si-icon">🏚️</span><div class="si-info"><div class="si-name">Suku Toraja</div><div class="si-detail">Sulawesi Selatan — Tongkonan & Rambu Solo</div></div></div>
+        <div class="suku-item"><span class="si-icon">🎼</span><div class="si-info"><div class="si-name">Suku Minahasa</div><div class="si-detail">Sulawesi Utara — Kolintang & Makanan Khas</div></div></div>
+        <div class="suku-item"><span class="si-icon">💃</span><div class="si-info"><div class="si-name">Suku Makassar</div><div class="si-detail">Sulawesi Selatan — Tari Padduppa (Penyambutan)</div></div></div>
+      </div>
+      <div class="info-box yellow"><div class="ib-title">✨ Budaya Terkenal</div><p>Kapal Pinisi buatan suku Bugis terkenal hingga ke seluruh dunia. Upacara Rambu Solo suku Toraja adalah salah satu upacara adat paling megah di Indonesia.</p></div>
+    </div>
+
+    <!-- BALI -->
+    <div class="materi-block region-bali fade-in" id="bali">
+      <h3><span>🌺 Bali & Nusa Tenggara</span></h3>
+      <p class="materi-body">Bali dan Nusa Tenggara adalah daerah yang terkenal dengan keindahan alam dan kekayaan budayanya yang memukau wisatawan dari seluruh dunia.</p>
+      <div class="suku-list">
+        <div class="suku-item"><span class="si-icon">🦁</span><div class="si-info"><div class="si-name">Suku Bali</div><div class="si-detail">Bali — Tari Kecak, Barong & Hindu</div></div></div>
+        <div class="suku-item"><span class="si-icon">🧶</span><div class="si-info"><div class="si-name">Suku Sasak</div><div class="si-detail">Lombok, NTB — Tenun & Tradisi Presean</div></div></div>
+        <div class="suku-item"><span class="si-icon">🎨</span><div class="si-info"><div class="si-name">Suku Flores</div><div class="si-detail">NTT — Tenun Ikat yang indah</div></div></div>
+        <div class="suku-item"><span class="si-icon">🏇</span><div class="si-info"><div class="si-name">Suku Sumba</div><div class="si-detail">NTT — Kain Sumba & Tradisi Pasola</div></div></div>
+      </div>
+      <div class="info-box blue"><div class="ib-title">✨ Budaya Terkenal</div><p>Tari Kecak Bali terkenal karena tidak menggunakan alat musik — iramanya berasal dari suara "cak" ratusan penari. Tenun Ikat NTT membutuhkan waktu berbulan-bulan untuk dibuat.</p></div>
+    </div>
+
+    <!-- MALUKU PAPUA -->
+    <div class="materi-block region-maluku fade-in" id="maluku">
+      <h3><span>🦜 Maluku & Papua</span></h3>
+      <p class="materi-body">Maluku dan Papua adalah wilayah paling timur Indonesia yang menyimpan kekayaan alam dan budaya yang luar biasa dan belum banyak dikenal dunia.</p>
+      <div class="suku-list">
+        <div class="suku-item"><span class="si-icon">🥁</span><div class="si-info"><div class="si-name">Suku Ambon</div><div class="si-detail">Maluku — Tifa & Tradisi Pela Gandong</div></div></div>
+        <div class="suku-item"><span class="si-icon">🌶️</span><div class="si-info"><div class="si-name">Suku Ternate & Tidore</div><div class="si-detail">Maluku Utara — Penghasil rempah-rempah</div></div></div>
+        <div class="suku-item"><span class="si-icon">🗿</span><div class="si-info"><div class="si-name">Suku Asmat</div><div class="si-detail">Papua — Ukiran kayu bernilai seni tinggi</div></div></div>
+        <div class="suku-item"><span class="si-icon">👜</span><div class="si-info"><div class="si-name">Suku Dani</div><div class="si-detail">Papua Pegunungan — Koteka & Noken</div></div></div>
+        <div class="suku-item"><span class="si-icon">🕺</span><div class="si-info"><div class="si-name">Suku Biak</div><div class="si-detail">Papua — Tari Yospan & Tradisi Bahari</div></div></div>
+      </div>
+      <div class="info-box blue"><div class="ib-title">✨ Budaya Terkenal</div><p>Noken Papua, tas anyaman dari serat pohon, telah diakui UNESCO sebagai Warisan Budaya Takbenda. Ukiran kayu Asmat terkenal di seluruh dunia karena keindahan dan keunikannya.</p></div>
+    </div>
+
+    <!-- RINGKASAN -->
+    <div class="materi-block fade-in" id="ringkasan">
+      <div class="sec-header">
+        <h2>📊 Tabel Ringkasan</h2>
+        <p>Rangkuman keragaman suku bangsa Indonesia</p>
+      </div>
+      <div class="tbl-wrap">
+        <table>
+          <thead><tr><th>Wilayah</th><th>Contoh Suku Bangsa</th><th>Ciri Khas Budaya</th></tr></thead>
+          <tbody>
+            <tr><td><strong>🏔️ Sumatra</strong></td><td>Batak, Minangkabau, Aceh, Melayu, Lampung</td><td>Ulos, Rumah Gadang, Tari Saman, Tenun</td></tr>
+            <tr><td><strong>☕ Jawa</strong></td><td>Jawa, Sunda, Betawi, Madura</td><td>Batik, Wayang, Gamelan, Angklung, Ondel-ondel</td></tr>
+            <tr><td><strong>🌿 Kalimantan</strong></td><td>Dayak, Banjar, Kutai</td><td>Mandau, Tari Hudoq, Rumah Lamin</td></tr>
+            <tr><td><strong>🦀 Sulawesi</strong></td><td>Bugis, Toraja, Minahasa, Makassar</td><td>Kapal Pinisi, Tongkonan, Tari Padduppa</td></tr>
+            <tr><td><strong>🌺 Bali & Nusa Tenggara</strong></td><td>Bali, Sasak, Flores, Sumba</td><td>Tari Kecak, Barong, Tenun Ikat NTT</td></tr>
+            <tr><td><strong>🦜 Maluku & Papua</strong></td><td>Ambon, Ternate, Asmat, Dani, Biak</td><td>Tifa, Noken Papua, Ukiran Asmat</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="page-nav-row fade-in">
+      <a href="identitas.html" class="btn btn-outline">← Kembali ke Identitas</a>
+      <a href="lkpd.html" class="btn btn-primary">Lanjut ke LKPD →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Bahan Ajar IPS Kelas IV SD</strong> — Keragaman Suku Bangsa di Indonesia</p>
+  <p>Kurikulum Merdeka · 🇮🇩 Bhinneka Tunggal Ika</p>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+// Active progress nav
+const pnBtns = document.querySelectorAll('.pn-btn');
+const matBlocks = document.querySelectorAll('.materi-block');
+window.addEventListener('scroll', () => {
+  let cur = '';
+  matBlocks.forEach(b => { if (window.scrollY >= b.offsetTop - 160) cur = b.id; });
+  pnBtns.forEach(b => b.classList.toggle('active', b.getAttribute('href') === '#' + cur));
+});
+</script>
+</body>
+</html>

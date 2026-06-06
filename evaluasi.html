@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluasi — Bahan Ajar IPS</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero {
+  background: linear-gradient(135deg, #1e1b4b, #4338ca, #6d28d9);
+  padding: 3.5rem 2rem 2.5rem; color: #fff; text-align: center;
+}
+.page-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin-bottom: 0.5rem; }
+.page-hero p { color: rgba(255,255,255,0.75); font-size: 0.95rem; }
+
+.content-wrap { max-width: 860px; margin: 0 auto; padding: 3rem 2rem; }
+
+/* PROGRESS BAR */
+.eval-progress {
+  background: #f3f4f6; border-radius: 999px; height: 8px;
+  margin-bottom: 2rem; overflow: hidden;
+}
+.eval-progress-bar {
+  height: 100%; background: linear-gradient(90deg, var(--hijau), var(--hijau-muda));
+  border-radius: 999px; transition: width 0.4s ease;
+  width: 0%;
+}
+.eval-info { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem; }
+.eval-info span { font-size: 0.85rem; color: var(--muted); font-weight: 600; }
+.eval-info .ei-count { font-size: 0.85rem; color: var(--hijau); font-weight: 700; }
+
+/* SOAL CARD */
+.soal-grid { display: flex; flex-direction: column; gap: 1.5rem; }
+
+.soal-card {
+  background: #fff; border: 1.5px solid var(--border);
+  border-radius: 18px; padding: 1.75rem;
+  transition: all 0.3s;
+}
+.soal-card:hover { box-shadow: 0 6px 24px rgba(0,0,0,0.07); }
+.soal-card.ans-ok   { border-color: #86efac; background: #f0fdf4; }
+.soal-card.ans-fail { border-color: #fca5a5; background: #fef2f2; }
+
+.soal-top { display: flex; align-items: flex-start; gap: 1rem; margin-bottom: 1.1rem; }
+.soal-num {
+  width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+  background: #6d28d9; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.82rem; font-weight: 700;
+}
+.soal-card.ans-ok   .soal-num { background: #16a34a; }
+.soal-card.ans-fail .soal-num { background: #dc2626; }
+.soal-text { font-size: 0.95rem; font-weight: 600; line-height: 1.55; padding-top: 0.3rem; }
+
+.opts { display: flex; flex-direction: column; gap: 0.5rem; }
+
+.opt-btn {
+  display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.7rem 1rem; border: 1.5px solid var(--border);
+  border-radius: 10px; background: #fff;
+  cursor: pointer; font-family: inherit; font-size: 0.875rem;
+  text-align: left; transition: all 0.2s; width: 100%;
+}
+.opt-btn:hover:not(:disabled) { border-color: #6d28d9; background: #f5f3ff; }
+.opt-btn:disabled { cursor: default; }
+
+.opt-key {
+  width: 28px; height: 28px; border-radius: 50%;
+  background: #f3f4f6; display: flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 0.78rem; flex-shrink: 0; transition: all 0.2s;
+}
+
+.opt-btn.picked   { border-color: #6d28d9; background: #f5f3ff; }
+.opt-btn.picked .opt-key { background: #6d28d9; color: #fff; }
+.opt-btn.ok   { border-color: #16a34a; background: #f0fdf4; }
+.opt-btn.ok .opt-key { background: #16a34a; color: #fff; }
+.opt-btn.fail { border-color: #dc2626; background: #fef2f2; }
+.opt-btn.fail .opt-key { background: #dc2626; color: #fff; }
+
+/* SCORE PANEL */
+.score-panel {
+  display: none; margin-top: 2.5rem;
+  background: linear-gradient(135deg, #0a2e1a, #1B6B3A);
+  border-radius: 24px; padding: 3rem 2rem; text-align: center; color: #fff;
+  animation: popIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+.score-panel.show { display: block; }
+
+@keyframes popIn { from {opacity:0; transform:scale(0.8);} to {opacity:1; transform:scale(1);} }
+
+.sc-label { font-size: 0.85rem; color: rgba(255,255,255,0.65); margin-bottom: 0.5rem; }
+.sc-num { font-family: 'Playfair Display', serif; font-size: 5rem; font-weight: 900; color: var(--kuning); line-height: 1; }
+.sc-detail { color: rgba(255,255,255,0.7); font-size: 0.9rem; margin: 0.5rem 0 1rem; }
+.sc-msg { font-size: 1.15rem; font-weight: 700; margin-bottom: 1.5rem; }
+.sc-breakdown { display: flex; justify-content: center; gap: 2.5rem; margin-bottom: 2rem; }
+.sc-bd { text-align: center; }
+.sc-bd .bd-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; }
+.sc-bd .bd-lbl { font-size: 0.78rem; color: rgba(255,255,255,0.6); }
+
+.retry-btn {
+  background: var(--kuning); color: #000; border: none;
+  padding: 0.85rem 2.5rem; border-radius: 50px;
+  font-family: inherit; font-size: 0.95rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s; margin-top: 0.5rem;
+}
+.retry-btn:hover { transform: scale(1.04); box-shadow: 0 8px 30px rgba(245,158,11,0.4); }
+
+/* Submit btn */
+.submit-wrap { margin-top: 2.5rem; text-align: center; }
+.submit-btn {
+  background: #6d28d9; color: #fff; border: none;
+  padding: 1rem 3rem; border-radius: 50px;
+  font-family: inherit; font-size: 1rem; font-weight: 700;
+  cursor: pointer; transition: all 0.3s;
+  box-shadow: 0 6px 24px rgba(109,40,217,0.35);
+}
+.submit-btn:hover { background: #5b21b6; transform: translateY(-2px); box-shadow: 0 10px 32px rgba(109,40,217,0.4); }
+
+.page-nav-row { display: flex; justify-content: flex-start; margin-top: 3rem; }
+</style>
+</head>
+<body class="page-enter">
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">IPS <span>Nusantara</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Beranda</a></li>
+    <li><a href="identitas.html">📋 Identitas</a></li>
+    <li><a href="materi.html">📖 Materi</a></li>
+    <li><a href="lkpd.html">✏️ LKPD</a></li>
+    <li><a href="evaluasi.html" class="active">🎯 Evaluasi</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleNav()">☰</button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Beranda</a>
+  <a href="identitas.html">📋 Identitas</a>
+  <a href="materi.html">📖 Materi</a>
+  <a href="lkpd.html">✏️ LKPD</a>
+  <a href="evaluasi.html" class="active">🎯 Evaluasi</a>
+</div>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <h1>🎯 Evaluasi</h1>
+    <p>Uji pemahaman kamu dengan 10 soal pilihan ganda!</p>
+  </div>
+
+  <div class="content-wrap">
+    <div class="breadcrumb"><a href="index.html">Beranda</a> › Evaluasi</div>
+
+    <div class="info-box blue fade-in" style="margin-bottom:2rem;">
+      <div class="ib-title">📌 Petunjuk Evaluasi</div>
+      <p>Pilih satu jawaban yang paling tepat untuk setiap soal. Setelah memilih, kamu langsung tahu benar atau salah. Setelah semua soal dijawab, klik <strong>Lihat Nilai Saya</strong> untuk melihat hasilnya!</p>
+    </div>
+
+    <div class="eval-info fade-in">
+      <span>Progress Soal</span>
+      <span class="ei-count" id="progressText">0 / 10 soal dijawab</span>
+    </div>
+    <div class="eval-progress fade-in">
+      <div class="eval-progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="soal-grid" id="soalGrid"></div>
+
+    <div class="submit-wrap fade-in">
+      <button class="submit-btn" onclick="lihatNilai()">📊 Lihat Nilai Saya</button>
+    </div>
+
+    <div class="score-panel" id="scorePanel">
+      <div class="sc-label">Nilai Kamu</div>
+      <div class="sc-num" id="scNum">0</div>
+      <div class="sc-detail" id="scDetail"></div>
+      <div class="sc-msg" id="scMsg"></div>
+      <div class="sc-breakdown">
+        <div class="sc-bd"><div class="bd-num" id="bdBenar" style="color:#4ade80;">0</div><div class="bd-lbl">Jawaban Benar</div></div>
+        <div class="sc-bd"><div class="bd-num" id="bdSalah" style="color:#f87171;">0</div><div class="bd-lbl">Jawaban Salah</div></div>
+      </div>
+      <button class="retry-btn" onclick="retryEval()">🔄 Coba Lagi</button>
+    </div>
+
+    <div class="page-nav-row fade-in" style="margin-top:1.5rem;">
+      <a href="lkpd.html" class="btn btn-outline">← Kembali ke LKPD</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Bahan Ajar IPS Kelas IV SD</strong> — Keragaman Suku Bangsa di Indonesia</p>
+  <p>Kurikulum Merdeka · 🇮🇩 Bhinneka Tunggal Ika</p>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.08});
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+
+const soalData = [
+  { q: "Semboyan kebangsaan Indonesia yang mencerminkan keberagaman suku bangsa adalah...", opts: ["Tut Wuri Handayani", "Bhinneka Tunggal Ika", "Pancasila Sakti", "Merdeka Belajar"], ans: 1 },
+  { q: "Suku Batak berasal dari provinsi...", opts: ["Sumatra Barat", "Riau", "Sumatra Utara", "Aceh"], ans: 2 },
+  { q: "Kesenian wayang kulit dan gamelan adalah ciri khas dari suku...", opts: ["Sunda", "Betawi", "Dayak", "Jawa"], ans: 3 },
+  { q: "Suku yang terkenal sebagai pelaut ulung dan pembuat kapal pinisi adalah...", opts: ["Suku Bugis", "Suku Toraja", "Suku Minahasa", "Suku Ambon"], ans: 0 },
+  { q: "Noken adalah tas anyaman tradisional yang berasal dari...", opts: ["Maluku", "NTT", "Papua", "Sulawesi"], ans: 2 },
+  { q: "Tari Kecak adalah tarian tradisional yang terkenal dari daerah...", opts: ["Lombok", "Bali", "Flores", "Sumba"], ans: 1 },
+  { q: "Suku Dayak dapat ditemukan di Pulau...", opts: ["Sumatra", "Jawa", "Kalimantan", "Papua"], ans: 2 },
+  { q: "Tongkonan adalah rumah adat milik suku...", opts: ["Bugis", "Makassar", "Toraja", "Minahasa"], ans: 2 },
+  { q: "Suku bangsa di Indonesia yang memiliki jumlah anggota terbesar adalah suku...", opts: ["Sunda", "Batak", "Madura", "Jawa"], ans: 3 },
+  { q: "Keberagaman suku bangsa di Indonesia merupakan...", opts: ["Hambatan persatuan bangsa", "Kekayaan dan kebanggaan bangsa", "Penyebab perpecahan", "Masalah sosial"], ans: 1 },
+];
+
+const keys = ['A','B','C','D'];
+const userAns = new Array(soalData.length).fill(null);
+const grid = document.getElementById('soalGrid');
+
+function buildSoal() {
+  grid.innerHTML = '';
+  soalData.forEach((s, i) => {
+    const card = document.createElement('div');
+    card.className = 'soal-card fade-in';
+    card.id = `sc${i}`;
+    card.innerHTML = `
+      <div class="soal-top">
+        <div class="soal-num">${i+1}</div>
+        <div class="soal-text">${s.q}</div>
+      </div>
+      <div class="opts" id="opts${i}">
+        ${s.opts.map((o,j) => `
+          <button class="opt-btn" onclick="pilih(${i},${j},this)">
+            <span class="opt-key">${keys[j]}</span> ${o}
+          </button>
+        `).join('')}
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+  document.querySelectorAll('.soal-card').forEach(el => obs.observe(el));
+}
+
+function pilih(soalIdx, optIdx, btn) {
+  if (userAns[soalIdx] !== null) return;
+  userAns[soalIdx] = optIdx;
+  const card = document.getElementById(`sc${soalIdx}`);
+  const benar = optIdx === soalData[soalIdx].ans;
+  card.querySelectorAll('.opt-btn').forEach((b, j) => {
+    b.disabled = true;
+    if (j === optIdx) b.classList.add(benar ? 'ok' : 'fail');
+    if (j === soalData[soalIdx].ans) b.classList.add('ok');
+  });
+  card.classList.add(benar ? 'ans-ok' : 'ans-fail');
+  updateProgress();
+}
+
+function updateProgress() {
+  const dijawab = userAns.filter(a => a !== null).length;
+  const pct = (dijawab / soalData.length) * 100;
+  document.getElementById('progressBar').style.width = pct + '%';
+  document.getElementById('progressText').textContent = `${dijawab} / ${soalData.length} soal dijawab`;
+}
+
+function lihatNilai() {
+  const dijawab = userAns.filter(a => a !== null).length;
+  if (dijawab < soalData.length) {
+    alert(`Masih ada ${soalData.length - dijawab} soal yang belum dijawab. Jawab semua dulu ya!`);
+    return;
+  }
+  const benar = userAns.filter((a, i) => a === soalData[i].ans).length;
+  const salah = soalData.length - benar;
+  const nilai = benar * 10;
+
+  document.getElementById('scNum').textContent = nilai;
+  document.getElementById('scDetail').textContent = `${benar} benar × 10 = ${nilai}`;
+  document.getElementById('bdBenar').textContent = benar;
+  document.getElementById('bdSalah').textContent = salah;
+
+  let msg = '';
+  if (nilai === 100)    msg = '🏆 Luar biasa! Nilai sempurna! Kamu benar-benar hebat!';
+  else if (nilai >= 80) msg = '🌟 Bagus sekali! Kamu sudah sangat memahami materinya!';
+  else if (nilai >= 60) msg = '👍 Cukup baik! Pelajari lagi bagian yang kurang tepat ya!';
+  else                  msg = '💪 Semangat! Baca kembali materinya dan coba lagi!';
+  document.getElementById('scMsg').textContent = msg;
+
+  const panel = document.getElementById('scorePanel');
+  panel.classList.add('show');
+  panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+function retryEval() {
+  userAns.fill(null);
+  document.getElementById('scorePanel').classList.remove('show');
+  updateProgress();
+  buildSoal();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+buildSoal();
+</script>
+</body>
+</html>

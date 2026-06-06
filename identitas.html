@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Identitas & CP/TP — Bahan Ajar IPS</title>
+<link rel="stylesheet" href="style.css">
+<style>
+.page-hero {
+  background: linear-gradient(135deg, #0a2e1a, #1B6B3A);
+  padding: 3.5rem 2rem 2.5rem;
+  color: #fff; text-align: center;
+}
+.page-hero h1 { font-family: 'Playfair Display', serif; font-size: 2.4rem; margin-bottom: 0.5rem; }
+.page-hero p { color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+
+.content-wrap { max-width: 900px; margin: 0 auto; padding: 3rem 2rem; }
+
+/* Identitas Table */
+.id-table { width: 100%; border-collapse: collapse; margin-bottom: 2.5rem; }
+.id-table tr { border-bottom: 1px solid var(--border); transition: background 0.2s; }
+.id-table tr:hover td { background: var(--hijau-pale); }
+.id-table td { padding: 1rem 1.25rem; font-size: 0.93rem; vertical-align: top; }
+.id-table td:first-child { font-weight: 700; color: var(--hijau); width: 200px; white-space: nowrap; }
+
+/* Petunjuk */
+.petunjuk-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; margin-bottom: 2.5rem; }
+@media(max-width:640px) { .petunjuk-grid { grid-template-columns: 1fr; } }
+.petunjuk-card { border-radius: 16px; padding: 1.75rem; }
+.petunjuk-card.siswa { background: var(--hijau-pale); border: 1.5px solid #86efac; }
+.petunjuk-card.guru  { background: var(--biru-pale);  border: 1.5px solid #93c5fd; }
+.petunjuk-card h3 { font-size: 1rem; font-weight: 700; margin-bottom: 1rem; }
+.petunjuk-card.siswa h3 { color: var(--hijau); }
+.petunjuk-card.guru  h3 { color: var(--biru); }
+.petunjuk-card ol { padding-left: 1.25rem; }
+.petunjuk-card li { font-size: 0.875rem; line-height: 1.8; color: #374151; }
+
+/* Peta Konsep */
+.peta-wrap {
+  background: linear-gradient(135deg, #061a0e, #1B6B3A);
+  border-radius: 20px; padding: 2.5rem 2rem; text-align: center; color: #fff;
+}
+.peta-center {
+  display: inline-block; background: var(--kuning); color: #000;
+  font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 700;
+  padding: 0.7rem 2rem; border-radius: 50px; margin-bottom: 1.5rem;
+}
+.peta-line { width: 2px; height: 30px; background: rgba(255,255,255,0.3); margin: 0 auto 1.5rem; }
+.peta-branches { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+.peta-branch {
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 14px; padding: 1rem 1.25rem; min-width: 120px;
+  transition: all 0.3s;
+}
+.peta-branch:hover { background: rgba(255,255,255,0.2); transform: translateY(-4px); }
+.peta-branch .pb-e { font-size: 1.4rem; display: block; margin-bottom: 0.3rem; }
+.peta-branch .pb-n { font-size: 0.85rem; font-weight: 700; }
+.peta-branch .pb-s { font-size: 0.72rem; opacity: 0.65; margin-top: 0.2rem; }
+
+/* Nav between pages */
+.page-nav { display: flex; justify-content: flex-end; margin-top: 3rem; }
+</style>
+</head>
+<body class="page-enter">
+
+<nav class="navbar">
+  <a href="index.html" class="nav-brand">IPS <span>Nusantara</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html">🏠 Beranda</a></li>
+    <li><a href="identitas.html" class="active">📋 Identitas</a></li>
+    <li><a href="materi.html">📖 Materi</a></li>
+    <li><a href="lkpd.html">✏️ LKPD</a></li>
+    <li><a href="evaluasi.html">🎯 Evaluasi</a></li>
+  </ul>
+  <button class="nav-hamburger" onclick="toggleNav()">☰</button>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html">🏠 Beranda</a>
+  <a href="identitas.html" class="active">📋 Identitas</a>
+  <a href="materi.html">📖 Materi</a>
+  <a href="lkpd.html">✏️ LKPD</a>
+  <a href="evaluasi.html">🎯 Evaluasi</a>
+</div>
+
+<div class="page-wrap">
+  <div class="page-hero">
+    <h1>📋 Identitas Bahan Ajar</h1>
+    <p>Capaian Pembelajaran, Tujuan, Petunjuk & Peta Konsep</p>
+  </div>
+
+  <div class="content-wrap">
+    <div class="breadcrumb"><a href="index.html">Beranda</a> › Identitas & CP/TP</div>
+
+    <!-- IDENTITAS -->
+    <div class="sec-header fade-in">
+      <h2>Identitas Bahan Ajar</h2>
+      <p>Informasi dasar pembelajaran</p>
+    </div>
+    <div class="tbl-wrap fade-in" style="margin-bottom:2.5rem;">
+      <table class="id-table">
+        <tr><td>📚 Mata Pelajaran</td><td>Ilmu Pengetahuan Sosial (IPS)</td></tr>
+        <tr><td>🎓 Kelas / Semester</td><td>IV (Empat) / Genap</td></tr>
+        <tr><td>📖 Kurikulum</td><td>Merdeka Belajar</td></tr>
+        <tr><td>⏱ Alokasi Waktu</td><td>2 × 35 Menit (1 Pertemuan)</td></tr>
+        <tr><td>🎯 Capaian Pembelajaran</td><td>Siswa mengenal suku-suku utama di Indonesia berdasarkan wilayah (Jawa, Sumatra, Kalimantan, Papua, dll.)</td></tr>
+        <tr><td>✅ Tujuan Pembelajaran</td><td>Siswa dapat menyebutkan keragaman suku bangsa di Indonesia</td></tr>
+        <tr><td>🌟 Profil Pelajar Pancasila</td><td>Berkebinekaan Global · Gotong Royong · Bernalar Kritis</td></tr>
+      </table>
+    </div>
+
+    <!-- PETUNJUK -->
+    <div class="sec-header fade-in">
+      <h2>Petunjuk Penggunaan</h2>
+      <p>Cara terbaik memanfaatkan bahan ajar ini</p>
+    </div>
+    <div class="petunjuk-grid fade-in">
+      <div class="petunjuk-card siswa">
+        <h3>📚 Untuk Siswa</h3>
+        <ol>
+          <li>Bacalah setiap bagian materi dengan teliti</li>
+          <li>Perhatikan gambar dan ilustrasi yang tersedia</li>
+          <li>Kerjakan aktivitas LKPD dengan sungguh-sungguh</li>
+          <li>Jawab soal evaluasi secara mandiri</li>
+          <li>Tanyakan kepada guru jika ada yang belum dipahami</li>
+        </ol>
+      </div>
+      <div class="petunjuk-card guru">
+        <h3>👨‍🏫 Untuk Guru</h3>
+        <ol>
+          <li>Gunakan bahan ajar ini sebagai panduan pembelajaran</li>
+          <li>Perkuat materi dengan video dan gambar tambahan</li>
+          <li>Dampingi siswa saat mengerjakan LKPD</li>
+          <li>Evaluasi pemahaman siswa di bagian akhir</li>
+          <li>Sesuaikan dengan konteks lokal sekolah masing-masing</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- PETA KONSEP -->
+    <div class="sec-header fade-in">
+      <h2>Peta Konsep</h2>
+      <p>Gambaran besar materi pembelajaran</p>
+    </div>
+    <div class="peta-wrap fade-in">
+      <div class="peta-center">🌏 Keragaman Suku Bangsa di Indonesia</div>
+      <div class="peta-line"></div>
+      <div class="peta-branches">
+        <div class="peta-branch"><span class="pb-e">🏔️</span><div class="pb-n">Sumatra</div><div class="pb-s">Batak, Minang, Aceh</div></div>
+        <div class="peta-branch"><span class="pb-e">☕</span><div class="pb-n">Jawa</div><div class="pb-s">Jawa, Sunda, Betawi</div></div>
+        <div class="peta-branch"><span class="pb-e">🌿</span><div class="pb-n">Kalimantan</div><div class="pb-s">Dayak, Banjar, Kutai</div></div>
+        <div class="peta-branch"><span class="pb-e">🦀</span><div class="pb-n">Sulawesi</div><div class="pb-s">Bugis, Toraja, Minahasa</div></div>
+        <div class="peta-branch"><span class="pb-e">🌺</span><div class="pb-n">Bali & NTB/NTT</div><div class="pb-s">Bali, Sasak, Flores</div></div>
+        <div class="peta-branch"><span class="pb-e">🦜</span><div class="pb-n">Maluku & Papua</div><div class="pb-s">Ambon, Asmat, Dani</div></div>
+      </div>
+    </div>
+
+    <div class="page-nav fade-in">
+      <a href="materi.html" class="btn btn-primary">Lanjut ke Materi →</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p><strong>Bahan Ajar IPS Kelas IV SD</strong> — Keragaman Suku Bangsa di Indonesia</p>
+  <p>Kurikulum Merdeka · 🇮🇩 Bhinneka Tunggal Ika</p>
+</footer>
+
+<script>
+function toggleNav() { document.getElementById('mobileNav').classList.toggle('open'); }
+const obs = new IntersectionObserver(e => e.forEach(x => { if(x.isIntersecting) x.target.classList.add('visible'); }), {threshold:0.1});
+document.querySelectorAll('.fade-in').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
